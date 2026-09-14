@@ -124,14 +124,14 @@ function MiniCard({
       >
         {/* <Paper elevation={5}> */}
         <CardContent>
-          {id && title &&(<Link to={`/${id}`}>
-            <h2>{title}</h2>
+          {id && title &&(<Link to={`/${id}`} style={{color:'black'}}>
+          <Typography sx={{fontSize:18, fontFamily:'sans-serif'}}>{title}</Typography>  
           </Link>)}
-          <Typography
+          <Typography 
             sx={{
               fontSize: 14,
               display: '-webkit-box',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: 4,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
             }}

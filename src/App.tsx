@@ -69,11 +69,22 @@ export function App({ funfilter }: App) {
             mb: 1,
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',//рассталкивает элементы между собой
+            justifyContent: 'space-between', //рассталкивает элементы между собой
           }}
         >
-          <Box sx={{ display: 'flex' }}>
-            <Typography sx={{ fontSize: 25, fontStyle: 'italic' }}>Фильтры</Typography>
+          <Box
+            sx={{
+              display: 'flex',
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: 25,
+                fontStyle: 'italic',
+              }}
+            >
+              Фильтры
+            </Typography>
             <IconButton onClick={funfilter}>
               <DeleteIcon></DeleteIcon>
             </IconButton>
@@ -91,19 +102,28 @@ export function App({ funfilter }: App) {
             alignItems: 'center',
             // border: '3px dashed',
             width: '100%',
-            justifyContent:"center"
+            justifyContent: 'center',
           }}
         >
           <InputFilm page={page} funChangeFilm={funSearchFilm}></InputFilm>
           <MyFilter state={results} handleState={ChangeResults} page={page}></MyFilter>
         </Box>
-        <Typography sx={{ mb: 5,fontSize: 16  }}>Год релиза:</Typography>
+        <Typography
+          sx={{
+            mb: 5,
+            fontSize: 16,
+          }}
+        >
+          Год релиза:
+        </Typography>
         <MySlider value={value} handleChange={handleChange}></MySlider>
-        <FormControl fullWidth sx={{ m: 2 }}></FormControl>
-        <MyAutocomplete
-          state={filterAutocomplete}
-          funChange={funChangeApp}
-        ></MyAutocomplete>
+        <FormControl
+          fullWidth
+          sx={{
+            m: 2,
+          }}
+        ></FormControl>
+        <MyAutocomplete state={filterAutocomplete} funChange={funChangeApp}></MyAutocomplete>
         <MyPagination page={page} handleChangePage={handleChangePage}></MyPagination>
       </Box>
 
