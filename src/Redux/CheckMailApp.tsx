@@ -8,23 +8,23 @@ import { FormControl } from '@mui/material';
 import { Label } from '@mui/icons-material';
 
 export const CheckMailApp = () => {
-  const { name, isLoggedIn, isLoggedMail } = useSelector((state: RootState) => state.user);
+  const { name, isLoggedIn, isLoggedMail, login } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [parolIn, setparol] = useState('');
   const [mail, setmail] = useState('');
 
-  return !isLoggedIn ? (
+  return (!isLoggedIn) ? (
     !isLoggedMail ? (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          width: '100vw',
-        }}
-      >
+      // <Box
+      //   sx={{
+      //     // display: 'flex',
+      //     // flexDirection: 'row',
+      //     // justifyContent: 'center',
+      //     // alignItems: 'center',
+      //     height: '100vh',
+      //     width: '100vw',
+      //   }}
+      // >
         <Box
           component='form'
           sx={{ display: 'flex', flexDirection: 'row' }}
@@ -46,7 +46,7 @@ export const CheckMailApp = () => {
             <LogoutIcon></LogoutIcon>
           </IconButton>
         </Box>
-      </Box>
+      // </Box>
     ) : (
       <Box
         sx={{

@@ -9,12 +9,19 @@ export default function MainSetup() {
   const changeFilter = () => usestateFilter(!stateFilter);
   const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
 
-  return !isLoggedIn ? (
-    <CheckMailApp></CheckMailApp>
-  ) : stateFilter ? (
+  // return !isLoggedIn ? (
+  //   <CheckMailApp></CheckMailApp>
+  // ) : stateFilter ? (
+  //   <App funfilter={changeFilter}></App>
+  // ) : (
+  //   <div>
+  //     <App funfilter={changeFilter}></App>
+  //   </div>
+   return stateFilter ? (
     <App funfilter={changeFilter}></App>
   ) : (
     <div>
       <App funfilter={changeFilter}></App>
     </div>
-  )}
+  );
+}

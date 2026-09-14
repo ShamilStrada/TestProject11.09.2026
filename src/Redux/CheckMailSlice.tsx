@@ -2,12 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 interface UserProp {
   name: string;
+  login:boolean;
   isLoggedMail: boolean;
   isLoggedIn: boolean;
   parol: string;
 }
 const InitialProps: UserProp = {
   name: '',
+  login:false,
   isLoggedMail: false,
   isLoggedIn: false,
   parol: '1111',
@@ -21,6 +23,8 @@ const CheckMail = createSlice({
       action.payload === state.parol
         ? (state.isLoggedIn = true)
         : (state.isLoggedIn = false);
+        state.login=false
+
     },
     loginMail: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
@@ -32,7 +36,11 @@ const CheckMail = createSlice({
       state.isLoggedIn = false;
       state.isLoggedMail = false;
     },
+    loginButton:(state)=>
+      {state.login=!state.login
+        console.log(state.login)
+      }
   },
 });
 export default CheckMail.reducer;
-export const { loginMail, loginParol, logout } = CheckMail.actions;
+export const { loginMail, loginParol, logout, loginButton } = CheckMail.actions;

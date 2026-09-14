@@ -13,7 +13,10 @@ import { InputFilm } from './InputFilm';
 import { Paper } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './Redux/Store';
+import { logout, loginButton } from './Redux/CheckMailSlice';
+import { CheckMailApp } from './Redux/CheckMailApp';
 // import { Paper } from '@mui/material';
 interface App {
   funfilter: () => void;
@@ -24,6 +27,9 @@ export function App({ funfilter }: App) {
   const [value, setValue] = useState<number[]>([1990, 2026]); ///слайдер
   const [filterAutocomplete, setFilterAutocomplete] = useState<[]>([]); //фильтры жанров
   const [dataSearchFilm, setDataSearchFilm] = useState<[]>([]); //поиск по названию
+  const isLoggedIn = useSelector((state: RootState) => state.user.isLoggedIn);
+  const login = useSelector((state: RootState) => state.user.login);
+  const dispatch = useDispatch();
 
   const funSearchFilm = (list: []) => {
     setDataSearchFilm(list);
@@ -45,8 +51,26 @@ export function App({ funfilter }: App) {
   }
   return (
     <>
-      {/* <FormControl fullWidth sx={{ m: 1 }} /> */}
-
+      {login && (
+        <Box
+          sx={{
+            position: 'absolute',
+            left: '50%',
+            top: '50%',
+            // transform:translate(-50%,-50%),
+            zIndex: 99,
+            border: '3px dashed',
+            width: '20dvw',
+            height: '20vh',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+          }}
+        >
+          <CheckMailApp></CheckMailApp>
+        </Box>
+      )}
       <Box
         component={Paper}
         elevation={10}
@@ -61,7 +85,7 @@ export function App({ funfilter }: App) {
           left: 0,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center', //отображение
+          justifyContent: 'flex-start', //отображение
         }}
       >
         <Box
@@ -89,44 +113,50 @@ export function App({ funfilter }: App) {
               <DeleteIcon></DeleteIcon>
             </IconButton>
           </Box>
-          <IconButton>
+          {/* <IconButton onClick={()=>(dispatch(logout()))}> */}
+          <IconButton onClick={() => {
+            dispatch(logout())
+            dispatch(loginButton())}}>
             <AccountBoxIcon></AccountBoxIcon>
           </IconButton>
         </Box>
-        <Box
-          sx={{
-            mb: 1,
-            display: 'flex',
-            gap: 2,
-            flexDirection: 'column',
-            alignItems: 'center',
-            // border: '3px dashed',
-            width: '100%',
-            justifyContent: 'center',
-          }}
-        >
-          <InputFilm page={page} funChangeFilm={funSearchFilm}></InputFilm>
-          <MyFilter state={results} handleState={ChangeResults} page={page}></MyFilter>
-        </Box>
-        <Typography
-          sx={{
-            mb: 5,
-            fontSize: 16,
-          }}
-        >
-          Год релиза:
-        </Typography>
-        <MySlider value={value} handleChange={handleChange}></MySlider>
-        <FormControl
-          fullWidth
-          sx={{
-            m: 2,
-          }}
-        ></FormControl>
-        <MyAutocomplete state={filterAutocomplete} funChange={funChangeApp}></MyAutocomplete>
-        <MyPagination page={page} handleChangePage={handleChangePage}></MyPagination>
+        {isLoggedIn && (
+          <>
+            <Box
+              sx={{
+                mb: 1,
+                display: 'flex',
+                gap: 2,
+                flexDirection: 'column',
+                alignItems: 'center',
+                // border: '3px dashed',
+                width: '100%',
+                justifyContent: 'center',
+              }}
+            >
+              <InputFilm page={page} funChangeFilm={funSearchFilm}></InputFilm>
+              <MyFilter state={results} handleState={ChangeResults} page={page}></MyFilter>
+            </Box>
+            <Typography
+              sx={{
+                mb: 5,
+                fontSize: 16,
+              }}
+            >
+              Год релиза:
+            </Typography>
+            <MySlider value={value} handleChange={handleChange}></MySlider>
+            <FormControl
+              fullWidth
+              sx={{
+                m: 2,
+              }}
+            ></FormControl>
+            <MyAutocomplete state={filterAutocomplete} funChange={funChangeApp}></MyAutocomplete>
+            <MyPagination page={page} handleChangePage={handleChangePage}></MyPagination>
+          </>
+        )}
       </Box>
-
       <Box
         component={Paper}
         elevation={10}
@@ -145,16 +175,19 @@ export function App({ funfilter }: App) {
           overflow: 'auto',
         }}
       >
-        <MyCard
-          searchResults={dataSearchFilm}
-          listResults={results}
-          value={value}
-          filterAutocompleteCard={filterAutocomplete}
-        ></MyCard>
+        {isLoggedIn && (
+          <MyCard
+            searchResults={dataSearchFilm}
+            listResults={results}
+            value={value}
+            filterAutocompleteCard={filterAutocomplete}
+          ></MyCard>
+        )}
       </Box>
     </>
   );
 }
+
 ///Может можно сделать красивее два в одном
 //  else {
 //     return (
