@@ -52,18 +52,19 @@ export function App({ funfilter }: App) {
   return (
     <>
       {login && (
-        <Box
+        <Box component={Paper} elevation={7}
           sx={{
             position: 'absolute',
-            left: '50%',
-            top: '50%',
+            // left: '50%',
+            // top: '50%',
             // transform:translate(-50%,-50%),
-            zIndex: 99,
-            border: '3px dashed',
+            // transform:CSSTranslate(x:50%,y:-50%,z:0),
+            zIndex: 9999,
+            border: '3px ',
             width: '20dvw',
             height: '20vh',
           display: 'flex',
-          flexDirection: 'row',
+          // flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center'
           }}

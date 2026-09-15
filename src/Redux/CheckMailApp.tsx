@@ -8,12 +8,12 @@ import { FormControl } from '@mui/material';
 import { Label } from '@mui/icons-material';
 
 export const CheckMailApp = () => {
-  const { name, isLoggedIn, isLoggedMail, login } = useSelector((state: RootState) => state.user);
+  const { name, isLoggedIn, isLoggedMail } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const [parolIn, setparol] = useState('');
   const [mail, setmail] = useState('');
 
-  return (!isLoggedIn) ? (
+  return !isLoggedIn ? (
     !isLoggedMail ? (
       // <Box
       //   sx={{
@@ -25,54 +25,54 @@ export const CheckMailApp = () => {
       //     width: '100vw',
       //   }}
       // >
-        <Box
-          component='form'
-          sx={{ display: 'flex', flexDirection: 'row' }}
-          onSubmit={(e: any) => {
-            e.preventDefault();
-            dispatch(loginMail(mail));
-            console.log(name);
-          }}
-        >
-          <TextField
-            value={mail}
-            onChange={(e) => {
-              setmail(e.target.value);
-              console.log(mail);
-            }}
-            placeholder='Введите логин'
-          ></TextField>
-          <IconButton onClick={() => dispatch(logout())}>
-            <LogoutIcon></LogoutIcon>
-          </IconButton>
-        </Box>
-      // </Box>
-    ) : (
       <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100vh',
-          width: '100vw',
+        component='form'
+        sx={{ display: 'flex', flexDirection: 'row' }}
+        onSubmit={(e: any) => {
+          e.preventDefault();
+          dispatch(loginMail(mail));
+          console.log(name);
         }}
       >
-        <Box
-          component='form'
-          sx={{ display: 'flex', flexDirection: 'row' }}
-          onSubmit={() => dispatch(loginParol(parolIn))}
-        >
-          <TextField
-            value={parolIn}
-            onChange={(e) => setparol(e.target.value)}
-            placeholder='Введите пароль'
-          ></TextField>
-          <IconButton onClick={() => dispatch(logout())}>
-            <LogoutIcon></LogoutIcon>
-          </IconButton>
-        </Box>
+        <TextField
+          value={mail}
+          onChange={(e) => {
+            setmail(e.target.value);
+            console.log(mail);
+          }}
+          placeholder='Введите логин'
+        ></TextField>
+        <IconButton onClick={() => dispatch(logout())}>
+          <LogoutIcon></LogoutIcon>
+        </IconButton>
       </Box>
+    ) : (
+      // </Box>
+      // <Box
+      //   sx={{
+      //     display: 'flex',
+      //     flexDirection: 'row',
+      //     justifyContent: 'center',
+      //     alignItems: 'center',
+      //     height: '100vh',
+      //     width: '100vw',
+      //   }}
+      // >
+      <Box
+        component='form'
+        sx={{ display: 'flex', flexDirection: 'row' }}
+        onSubmit={() => dispatch(loginParol(parolIn))}
+      >
+        <TextField
+          value={parolIn}
+          onChange={(e) => setparol(e.target.value)}
+          placeholder='Введите пароль'
+        ></TextField>
+        <IconButton onClick={() => dispatch(logout())}>
+          <LogoutIcon></LogoutIcon>
+        </IconButton>
+      </Box>
+      // </Box>
     )
   ) : null;
 };
