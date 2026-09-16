@@ -40,7 +40,7 @@ export function MyFilter({ state, handleState, page }: MyFilterprops) {
   return (
     <>
       <Select
-        sx={{ display:'flex', m: 2, width: "30vh" }}
+        sx={{width:'60%'}}
         value={url}
         onChange={(e) => {
           seturl(e.target.value);

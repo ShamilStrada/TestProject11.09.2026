@@ -52,25 +52,40 @@ export function App({ funfilter }: App) {
   return (
     <>
       {login && (
-        <Box component={Paper} elevation={7}
-          sx={{
-            position: 'absolute',
-            // left: '50%',
-            // top: '50%',
-            // transform:translate(-50%,-50%),
-            // transform:CSSTranslate(x:50%,y:-50%,z:0),
-            zIndex: 9999,
-            border: '3px ',
-            width: '20dvw',
-            height: '20vh',
-          display: 'flex',
-          // flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center'
-          }}
-        >
-          <CheckMailApp></CheckMailApp>
-        </Box>
+        // <Box
+        //   sx={{
+        //     border: '3px dashed',
+        //     display: 'flex',
+        //     // justifyContent: 'center',
+        //     // alignItems: 'center',
+        //     height: '100vh',
+        //     width: '100vw',
+        //     position:'relative'
+        //   }}
+        // >
+          <Box
+            component={Paper}
+            elevation={7}
+            sx={{
+              position: 'fixed',
+              left: '50%',
+              top: '50%',
+              transform:'translate(-50%,-50%)',
+              // transform:CSSTranslate(x:50%,y:-50%,z:0),
+              zIndex: 1,
+              border: '3px ',
+              width: '20dvw',
+              height: '20vh',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              // alignContent:'center'
+            }}
+          >
+            <CheckMailApp></CheckMailApp>
+          </Box>
+        // </Box>
       )}
       <Box
         component={Paper}
@@ -115,9 +130,12 @@ export function App({ funfilter }: App) {
             </IconButton>
           </Box>
           {/* <IconButton onClick={()=>(dispatch(logout()))}> */}
-          <IconButton onClick={() => {
-            dispatch(logout())
-            dispatch(loginButton())}}>
+          <IconButton
+            onClick={() => {
+              dispatch(logout());
+              dispatch(loginButton());
+            }}
+          >
             <AccountBoxIcon></AccountBoxIcon>
           </IconButton>
         </Box>
@@ -125,9 +143,9 @@ export function App({ funfilter }: App) {
           <>
             <Box
               sx={{
-                mb: 1,
+                m: 1,
                 display: 'flex',
-                gap: 2,
+                gap: 1,
                 flexDirection: 'column',
                 alignItems: 'center',
                 // border: '3px dashed',

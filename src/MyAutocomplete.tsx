@@ -59,7 +59,7 @@ export function MyAutocomplete({funChange}:filters) {
         <Typography sx={{fontSize: 16}}>Выбранные категории:</Typography>
       </div>
       <span></span>
-      <Autocomplete sx={{}}
+      <Autocomplete sx={{mt:1}}
         value={renderInput}
         onChange={(e, value) => {
           setrenderInput(value);

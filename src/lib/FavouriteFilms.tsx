@@ -25,7 +25,7 @@ export function FavouriteFilm({ url, method }: Fetch) {
       }
       const data = await res.json();
       // setList(data)
-      console.log(data);
+      console.log(data.results);
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
     }

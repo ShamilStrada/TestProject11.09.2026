@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { TextField,Box } from "@mui/material";
 import { useEffect, useState } from "react";
 
 interface Film {
@@ -35,7 +35,7 @@ export const InputFilm = ({funChangeFilm, page}:Film) => {
       .catch((err) => console.error(err.message));
   }, [flag,page]);
   return (
-    <form
+    <Box component={'form'} sx={{ width:'60%'}}
       onSubmit={(e) => {
         //только форма имеет возможность отправлять запрос через Enter
         e.preventDefault();
@@ -43,11 +43,11 @@ export const InputFilm = ({funChangeFilm, page}:Film) => {
         setFlag(!flag);
       }}
     >
-      <TextField sx={{width: "80%"}}
+      <TextField sx={{}}
         placeholder="Введите название фильма"
         onChange={(e) => setValueInput(e.target.value)}
         value={valueInput}
       ></TextField>
-    </form>
+    </Box>
   );
 };
