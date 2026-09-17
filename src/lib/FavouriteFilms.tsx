@@ -23,8 +23,8 @@ export async function FavouriteFilm({ url, method }: Fetch) {
         throw new Error(`Ошибка сервера: ${res.status}`);
       }
       const data = await res.json();
-      return data.results;
       console.log(data.results);
+      return data.results;
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
       return []; //в случае если будет ошибка

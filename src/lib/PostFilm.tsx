@@ -33,7 +33,7 @@ export function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete }: Fet
       }
       const data = await res.json();
       // setList(data)
-      console.log(data);
+      console.log(data.success);
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
     } finally {
