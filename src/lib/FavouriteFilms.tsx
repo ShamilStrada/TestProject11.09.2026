@@ -8,8 +8,7 @@ interface Fetch {
 //   id: 1,
 //   url: "",
 // };
-export function FavouriteFilm({ url, method }: Fetch) {
-  const fetchFilm = async () => {
+export async function FavouriteFilm({ url, method }: Fetch) {
     try {
       const res = await fetch(`https://api.themoviedb.org/3` + url, {
         method: method,
@@ -24,11 +23,10 @@ export function FavouriteFilm({ url, method }: Fetch) {
         throw new Error(`Ошибка сервера: ${res.status}`);
       }
       const data = await res.json();
-      // setList(data)
+      return data.results;
       console.log(data.results);
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
+      return []; //в случае если будет ошибка
     }
   };
-  fetchFilm();
-}

@@ -6,12 +6,13 @@ import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { FormControl } from '@mui/material';
 import { Label } from '@mui/icons-material';
+import { useLocalStorage } from 'usehooks-ts';
 
 export const CheckMailApp = () => {
   const { name, isLoggedIn, isLoggedMail } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-  const [parolIn, setparol] = useState('');
-  const [mail, setmail] = useState('');
+  const [parolIn, setparol] = useLocalStorage('parol', '');
+  const [mail, setmail] = useLocalStorage('name', '');
 
   return !isLoggedIn ? (
     !isLoggedMail ? (
@@ -31,6 +32,7 @@ export const CheckMailApp = () => {
         onSubmit={(e: any) => {
           e.preventDefault();
           dispatch(loginMail(mail));
+          setTimeout(() => setmail(''), 100);
           console.log(name);
         }}
       >
@@ -38,6 +40,7 @@ export const CheckMailApp = () => {
           value={mail}
           onChange={(e) => {
             setmail(e.target.value);
+            
             console.log(mail);
           }}
           placeholder='Введите логин'

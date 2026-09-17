@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 interface UserProp {
   name: string;
   login: boolean;
@@ -16,6 +17,7 @@ const InitialProps: UserProp = {
 };
 
 const CheckMail = createSlice({
+  
   name: 'user',
   initialState: InitialProps,
   reducers: {
