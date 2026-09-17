@@ -1,12 +1,14 @@
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FavouriteFilm } from './lib/FavouriteFilms';
 import { AddDeleteFavouriteFilm } from './lib/PostFilm';
+
 interface PropsMyFavourite {
   id: number;
 }
 export function MyFavouriteIcon({ id }: PropsMyFavourite) {
+  const listRef = useRef<any>([])
   const [flag, setFlag] = useState<boolean>(false);
   const [list, setList] = useState<any[]>([]);
   // let newFlag = false;
@@ -14,6 +16,7 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
     FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
       setList(films);
       console.log(films);
+      listRef.current=films
       // newFlag=films.some((a):any=>a.id===id),
       // console.log(newFlag)
       // console.log(list);
@@ -34,8 +37,8 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
               }),
             1000
           );
-        }}
-        sx={{ color: flag ? 'red' : 'white' }}
+        setTimeout(()=>console.log(listRef),5000)}}
+        sx={{ color: flag ? 'red' : 'none' }}
       ></FavoriteIcon>
     </IconButton>
   );
