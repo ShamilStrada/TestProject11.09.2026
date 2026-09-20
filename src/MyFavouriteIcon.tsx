@@ -13,32 +13,33 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const [list, setList] = useState<any[]>([]);
   // let newFlag = false;
   useEffect(() => {
+    setTimeout(()=>
     FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
       setList(films);
       console.log(films);
       listRef.current=films
+      console.log(listRef.current.some((a:any)=>a.id===id));
       // newFlag=films.some((a):any=>a.id===id),
       // console.log(newFlag)
       // console.log(list);
-    });
+    }),3000)
+  // useEffect(()=>{
+  //   console.log(list)
+  // },[list])
   }, [flag]);
   return (
     <IconButton>
       <FavoriteIcon
         onClick={() => {
           setFlag(!flag);
-          setTimeout(
-            () =>
               AddDeleteFavouriteFilm({
                 url: `/account/${22187086}/favorite`,
                 idFilm: id,
                 AddOrDelete: flag ? false : true,
                 method: 'POST',
               }),
-            1000
-          );
         setTimeout(()=>console.log(listRef),5000)}}
-        sx={{ color: flag ? 'red' : 'none' }}
+        sx={{ color: (listRef.current.some((a:any)=>a.id===id)) ? 'red' : 'none' }}
       ></FavoriteIcon>
     </IconButton>
   );
