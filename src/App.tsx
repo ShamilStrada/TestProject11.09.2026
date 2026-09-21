@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './Redux/Store';
 import { logout, loginButton } from './Redux/CheckMailSlice';
 import { CheckMailApp } from './Redux/CheckMailApp';
+import { CardBox, CheckMailBox, FilterBox } from './styled.tsx/styledBox';
 // import { Paper } from '@mui/material';
 interface App {
   funfilter: () => void;
@@ -62,47 +63,13 @@ export function App({ funfilter }: App) {
         //     width: '100vw',
         //     position:'relative'
         //   }}
-        // >
-          <Box
-            component={Paper}
-            elevation={7}
-            sx={{
-              position: 'fixed',
-              left: '50%',
-              top: '50%',
-              transform:'translate(-50%,-50%)',
-              // transform:CSSTranslate(x:50%,y:-50%,z:0),
-              zIndex: 1,
-              border: '3px ',
-              width: '20dvw',
-              height: '20vh',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              // alignContent:'center'
-            }}
-          >
-            <CheckMailApp></CheckMailApp>
-          </Box>
-        // </Box>
+        // >// </Box>
+        <CheckMailBox elevation={7}>
+          <CheckMailApp></CheckMailApp>
+        </CheckMailBox>
       )}
-      <Box
-        component={Paper}
+      <FilterBox
         elevation={10}
-        sx={{
-          width: '20dvw',
-          height: '93dvh',
-          m: 1,
-          p: 2,
-          // border: '3px dashed',
-          position: 'absolute', //позиция
-          top: 0, //перенесли бокс в правый верхний угол
-          left: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start', //отображение
-        }}
       >
         <Box
           sx={{
@@ -175,25 +142,8 @@ export function App({ funfilter }: App) {
             <MyPagination page={page} handleChangePage={handleChangePage}></MyPagination>
           </>
         )}
-      </Box>
-      <Box
-        component={Paper}
-        elevation={10}
-        sx={{
-          // border: '3px dashed',
-          // borderRadius:"5",
-          width: '70vw',
-          height: '100vh',
-          position: 'fixed', //позиция
-          top: 0, //перенесли бокс в правый верхний угол
-          right: 0,
-          m: 1, //отступы
-          p: 1,
-          display: 'flex', //отображение
-          flexWrap: 'wrap', //перенос строки
-          overflow: 'auto',
-        }}
-      >
+      </FilterBox>
+      <CardBox elevation={10}>
         {isLoggedIn && (
           <MyCard
             searchResults={dataSearchFilm}
@@ -202,7 +152,7 @@ export function App({ funfilter }: App) {
             filterAutocompleteCard={filterAutocomplete}
           ></MyCard>
         )}
-      </Box>
+      </CardBox>
     </>
   );
 }
