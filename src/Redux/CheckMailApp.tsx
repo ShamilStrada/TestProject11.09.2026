@@ -32,7 +32,7 @@ export const CheckMailApp = () => {
         onSubmit={(e: any) => {
           e.preventDefault();
           dispatch(loginMail(mail));
-          setTimeout(() => setmail(''), 100);
+          // setTimeout(() => setmail(''), 100);
           console.log(name);
         }}
       >
@@ -40,7 +40,6 @@ export const CheckMailApp = () => {
           value={mail}
           onChange={(e) => {
             setmail(e.target.value);
-            
             console.log(mail);
           }}
           placeholder='Введите логин'
