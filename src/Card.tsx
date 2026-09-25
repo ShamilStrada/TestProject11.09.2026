@@ -4,10 +4,11 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 // import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
 // import { AddDeleteFavouriteFilm } from "../../lib/FavouriteFilms";
 import { MyFavouriteIcon } from './MyFavouriteIcon';
+import { EveryCardBox } from './styled.tsx/styledBox';
 // import { createContext, useState } from "react";
 // import { useImmer } from "use-immer";
 // import { useEffect, useState } from "react";
@@ -19,12 +20,7 @@ interface MyCardProps {
   searchResults: any[];
 }
 
-export function MyCard({
-  listResults = [],
-  value = [],
-  filterAutocompleteCard,
-  searchResults,
-}: MyCardProps) {
+export function MyCard({ listResults = [], value = [], filterAutocompleteCard, searchResults }: MyCardProps) {
   //можно прописать пропсы так, через интерфейс либо как ниже
   // setFilterMassive((draft)=>((((filterAutocompleteCard.map(a=>Object.values(a)))).flat()).filter(a=>typeof a!=='string')))
   // const [filterMassive, setFilterMassive]=useImmer<any[]>([]);
@@ -39,9 +35,7 @@ export function MyCard({
   console.log(filterMassive);
   console.log(value);
   console.log(
-    listResults.filter(
-      (a) => value[1] > parseInt(a.release_date) && parseInt(a.release_date) < value[0]
-    )
+    listResults.filter((a) => value[1] > parseInt(a.release_date) && parseInt(a.release_date) < value[0])
   );
   console.log(searchResults);
 
@@ -60,9 +54,7 @@ export function MyCard({
   return (searchResults.length > 0 ? searchResults : listResults)
     .filter(
       (a) =>
-        (filterMassive.length > 0
-          ? filterMassive.some((item) => a.genre_ids.includes(item))
-          : true) &&
+        (filterMassive.length > 0 ? filterMassive.some((item) => a.genre_ids.includes(item)) : true) &&
         !(value[0] >= parseInt(a.release_date)) &&
         parseInt(a.release_date) <= value[1]
     )
@@ -98,20 +90,12 @@ function MiniCard({
   raiting: number;
 }) {
   return (
-    <Card
-      sx={{
-        width: '100%',
-        height: 250,
-        m: 1,
-        display: 'flex',
-        flexDirection: 'row',
-      }}
-    >
+    <Card component={EveryCardBox}>
       <CardMedia
         sx={{ objectFit: 'contain', width: 200, flexShrink: 0 }}
-        component="img"
+        component='img'
         image={`https://image.tmdb.org/t/p/original${image}`}
-        alt="Простите, не вышло"
+        alt='Простите, не вышло'
       />
       <Box
         sx={{
@@ -124,10 +108,12 @@ function MiniCard({
       >
         {/* <Paper elevation={5}> */}
         <CardContent>
-          {id && title &&(<Link to={`/${id}`} style={{color:'black'}}>
-          <Typography sx={{fontSize:18, fontFamily:'sans-serif'}}>{title}</Typography>  
-          </Link>)}
-          <Typography 
+          {id && title && (
+            <Link to={`/${id}`} style={{ color: 'black' }}>
+              <Typography sx={{ fontSize: 18, fontFamily: 'sans-serif' }}>{title}</Typography>
+            </Link>
+          )}
+          <Typography
             sx={{
               fontSize: 14,
               display: '-webkit-box',
@@ -141,9 +127,7 @@ function MiniCard({
           {/* <Typography>{`https://image.tmdb.org/t/p/original${image}`}</Typography> */}
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button onClick={() => console.log(id)}>
-            Оценка: {Math.round(raiting * 100) / 100}
-          </button>
+          <button onClick={() => console.log(id)}>Оценка: {Math.round(raiting * 100) / 100}</button>
           {/* <IconButton> */}
           {/* <FavoriteIcon sx={{color:"disabled"}} ></FavoriteIcon> */}
           {/* <FavoriteIcon onClick={()=>AddDeleteFavouriteFilm({url:`/account/${22187086}/favorite/movies`})} sx={{color:"#da1010"}} ></FavoriteIcon> */}

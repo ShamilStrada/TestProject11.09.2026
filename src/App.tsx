@@ -18,7 +18,7 @@ import { RootState } from './Redux/Store';
 import { logout, loginButton } from './Redux/CheckMailSlice';
 import { CheckMailApp } from './Redux/CheckMailApp';
 import { CardBox, CheckMailBox, FilterBox } from './styled.tsx/styledBox';
-import {Tooltip} from '@mui/material';
+import { Tooltip } from '@mui/material';
 // import { Paper } from '@mui/material';
 interface App {
   funfilter: () => void;
@@ -91,22 +91,22 @@ export function App({ funfilter }: App) {
             >
               Фильтры
             </Typography>
-            
+            <Tooltip title='Clear Filters'>
               <IconButton onClick={funfilter}>
                 <DeleteIcon></DeleteIcon>
               </IconButton>
-            
+            </Tooltip>
           </Box>
           {/* <IconButton onClick={()=>(dispatch(logout()))}> */}
-          <Tooltip title= {isLoggedIn?"Logout":"Login"} >
-          <IconButton
-            onClick={() => {
-              dispatch(logout());
-              dispatch(loginButton());
-            }}
-          >
-            <AccountBoxIcon></AccountBoxIcon>
-          </IconButton>
+          <Tooltip title={isLoggedIn ? 'Logout' : 'Login'}>
+            <IconButton
+              onClick={() => {
+                dispatch(logout());
+                dispatch(loginButton());
+              }}
+            >
+              <AccountBoxIcon></AccountBoxIcon>
+            </IconButton>
           </Tooltip>
         </Box>
         {isLoggedIn && (

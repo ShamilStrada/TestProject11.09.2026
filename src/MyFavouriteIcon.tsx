@@ -8,38 +8,42 @@ interface PropsMyFavourite {
   id: number;
 }
 export function MyFavouriteIcon({ id }: PropsMyFavourite) {
-  const listRef = useRef<any>([])
+  const listRef = useRef<any>([]);
   const [flag, setFlag] = useState<boolean>(false);
   const [list, setList] = useState<any[]>([]);
   // let newFlag = false;
   useEffect(() => {
-    setTimeout(()=>
-    FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
-      setList(films);
-      console.log(films);
-      listRef.current=films
-      console.log(listRef.current.some((a:any)=>a.id===id));
-      // newFlag=films.some((a):any=>a.id===id),
-      // console.log(newFlag)
-      // console.log(list);
-    }),3000)
-  // useEffect(()=>{
-  //   console.log(list)
-  // },[list])
+    setTimeout(
+      () =>
+        FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
+          setList(films);
+          console.log(films);
+          listRef.current = films;
+          console.log(listRef.current.some((a: any) => a.id === id));
+          // newFlag=films.some((a):any=>a.id===id),
+          // console.log(newFlag)
+          // console.log(list);
+        }),
+      3000
+    );
+    // useEffect(()=>{
+    //   console.log(list)
+    // },[list])
   }, [flag]);
   return (
     <IconButton>
       <FavoriteIcon
         onClick={() => {
           setFlag(!flag);
-              AddDeleteFavouriteFilm({
-                url: `/account/${22187086}/favorite`,
-                idFilm: id,
-                AddOrDelete: flag ? false : true,
-                method: 'POST',
-              }),
-        setTimeout(()=>console.log(listRef),5000)}}
-        sx={{ color: (listRef.current.some((a:any)=>a.id===id)) ? 'red' : 'none' }}
+          (AddDeleteFavouriteFilm({
+            url: `/account/${22187086}/favorite`,
+            idFilm: id,
+            AddOrDelete: flag ? false : true,
+            method: 'POST',
+          }),
+            setTimeout(() => console.log(listRef), 5000));
+        }}
+        sx={{ color: listRef.current.some((a: any) => a.id === id) ? 'red' : 'none' }}
       ></FavoriteIcon>
     </IconButton>
   );

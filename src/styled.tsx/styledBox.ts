@@ -1,5 +1,6 @@
-import styled from '@emotion/styled';
+import { styled } from '@mui/material/styles';
 import { Box, Paper } from '@mui/material';
+import { theme } from './theme';
 export const CardBox = styled(Paper)(({ theme }) => ({
   // border: '3px dashed',
   // borderRadius:"5",
@@ -8,17 +9,31 @@ export const CardBox = styled(Paper)(({ theme }) => ({
   position: 'fixed', //позиция
   top: 0, //перенесли бокс в правый верхний угол
   right: 0,
-  margin: 8, //отступы
-  padding: 8,
+  margin: theme.spacing(2), //отступы
+  padding: theme.spacing(2),
   display: 'flex', //отображение
   flexWrap: 'wrap', //перенос строки
   overflow: 'auto',
 }));
+export const EveryCardBox = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  height: '35%',
+  margin: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'row',
+  '&:hover': {
+    transition: `transform 0.2s, box-shadow 0.2s`,
+    transform: 'scale(1.01)',
+    boxShadow: 5,
+  //  cursor: 'pointer'
+  // backdropFilter: 'blur(10px)'
+  },
+}));
 export const FilterBox = styled(Paper)(({ theme }) => ({
   width: '20dvw',
-  height: '99dvh',
-  margin: 8,
-  padding: 8,
+  height: '95dvh',
+  margin: theme.spacing(2),
+  padding: theme.spacing(1),
   // border: '3px dashed',
   position: 'absolute', //позиция
   top: 0, //перенесли бокс в правый верхний угол

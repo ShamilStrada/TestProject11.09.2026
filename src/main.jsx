@@ -15,9 +15,8 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <CssBaseline>
-          <NewApp></NewApp>
-        </CssBaseline>
+        <CssBaseline />
+        <NewApp></NewApp>
       </Provider>
     </ThemeProvider>
   </StrictMode>

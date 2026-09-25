@@ -13,19 +13,8 @@ export const CheckMailApp = () => {
   const dispatch = useDispatch();
   const [parolIn, setparol] = useLocalStorage('parol', '');
   const [mail, setmail] = useLocalStorage('name', '');
-
   return !isLoggedIn ? (
     !isLoggedMail ? (
-      // <Box
-      //   sx={{
-      //     // display: 'flex',
-      //     // flexDirection: 'row',
-      //     // justifyContent: 'center',
-      //     // alignItems: 'center',
-      //     height: '100vh',
-      //     width: '100vw',
-      //   }}
-      // >
       <Box
         component='form'
         sx={{ display: 'flex', flexDirection: 'row' }}
@@ -49,17 +38,6 @@ export const CheckMailApp = () => {
         </IconButton>
       </Box>
     ) : (
-      // </Box>
-      // <Box
-      //   sx={{
-      //     display: 'flex',
-      //     flexDirection: 'row',
-      //     justifyContent: 'center',
-      //     alignItems: 'center',
-      //     height: '100vh',
-      //     width: '100vw',
-      //   }}
-      // >
       <Box
         component='form'
         sx={{ display: 'flex', flexDirection: 'row' }}

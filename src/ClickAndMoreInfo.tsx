@@ -7,10 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import { IconButton } from "@mui/material";
-  // 'https://api.themoviedb.org/3/movie/969681?language=ru';
-  // `https://developer.themoviedb.org/reference/movie-details`
+
 export function AppClick() {
   const { idAboutFilm } = useParams() as { idAboutFilm: string };
   const url = `https://api.themoviedb.org/3/movie/${idAboutFilm}?language=ru`;
@@ -35,21 +32,28 @@ export function AppClick() {
   }, [url]);
   if (loading) return <div>"Загрузка..."</div>;
   return (
-    <Box sx={{ display: 'flex', width: '100vw', height: '100vh' }}>
-      <Card sx={{ Width: '50%', Height: '50%', m: 1, display: 'flex', position: 'relative' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        width: '100vw',
+        height: '100vh',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Card sx={{ width: '70%', height: '70%', m: 1, display: 'flex', position: 'relative' }}>
         <CardMedia
+          sx={{ height: '100%', objectFit: 'contain' }}
           component='img'
-          height={600}
-          width={100}
           image={`https://image.tmdb.org/t/p/original${dataFilm.poster_path}`}
           alt='Простите, не вышло'
         />
         <CardContent>
           {/* <Link to={`/${id}`}><h2>{title}</h2></Link>  */}
           <Link to={'/'}>
-            <h1>{dataFilm.title}</h1>
+            <Typography sx={{ fontSize: 22, color: 'black', fontWeight:'bold' }}>{dataFilm.title}</Typography>
           </Link>
-          <Typography sx={{ fontSize: 20, fontWeight: 'bold' }} gutterBottom>
+          <Typography sx={{ fontSize: 20, fontWeight:'', fontFamily:'cursive' }} gutterBottom>
             {'Слоган для зрителей: ' + dataFilm.tagline}
           </Typography>
           <Typography sx={{ fontSize: 16 }} align='left' gutterBottom>
@@ -78,9 +82,12 @@ export function AppClick() {
             {'Бюджет: ' + dataFilm.budget / 10 ** 6 + ' млн. $'}
           </Typography>
         </CardContent>
-        <CardActions>
-        </CardActions>
+        <CardActions></CardActions>
       </Card>
     </Box>
   );
 }
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import { IconButton } from "@mui/material";
+// 'https://api.themoviedb.org/3/movie/969681?language=ru';
+// `https://developer.themoviedb.org/reference/movie-details`
