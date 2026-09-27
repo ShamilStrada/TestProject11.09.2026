@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { data, Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -7,28 +7,20 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
+import { FavouriteFilm } from './lib/FavouriteFilms';
 
 export function AppClick() {
   const { idAboutFilm } = useParams() as { idAboutFilm: string };
-  const url = `https://api.themoviedb.org/3/movie/${idAboutFilm}?language=ru`;
+  const url = `/movie/${idAboutFilm}?language=ru`;
   const [dataFilm, setdataFilm] = useState<any>({});
   const [loading, setloading] = useState<boolean>(true);
   useEffect(() => {
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmE5NGFiN2VkMWY0MTYzNWVmYTYwNWY3ZWM3NGEwYSIsIm5iZiI6MTc1Mzg5ODQzOC45MjEsInN1YiI6IjY4OGE1ZGM2ODYyYmNkMmJmYmExYTZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JkQMetRZX9F4quD8GBqSSWp2VLcNctcAL_VwQ_SUrSk',
-      },
-    })
-      .then((res) => res.json())
+    FavouriteFilm({ url: url })
       .then((data) => {
-        console.log(data);
-        setdataFilm(data);
-      })
-      .catch((err) => console.error('Ошибка загрузки:' + err))
-      .finally(() => setloading(false));
+      console.log(data);
+      setdataFilm(data);
+    })
+    .finally(()=>setloading(false));
   }, [url]);
   if (loading) return <div>"Загрузка..."</div>;
   return (
@@ -51,9 +43,11 @@ export function AppClick() {
         <CardContent>
           {/* <Link to={`/${id}`}><h2>{title}</h2></Link>  */}
           <Link to={'/'}>
-            <Typography sx={{ fontSize: 22, color: 'black', fontWeight:'bold' }}>{dataFilm.title}</Typography>
+            <Typography sx={{ fontSize: 22, color: 'black', fontWeight: 'bold' }}>
+              {dataFilm.title}
+            </Typography>
           </Link>
-          <Typography sx={{ fontSize: 20, fontWeight:'', fontFamily:'cursive' }} gutterBottom>
+          <Typography sx={{ fontSize: 20, fontWeight: '', fontFamily: 'cursive' }} gutterBottom>
             {'Слоган для зрителей: ' + dataFilm.tagline}
           </Typography>
           <Typography sx={{ fontSize: 16 }} align='left' gutterBottom>
@@ -91,3 +85,18 @@ export function AppClick() {
 // import { IconButton } from "@mui/material";
 // 'https://api.themoviedb.org/3/movie/969681?language=ru';
 // `https://developer.themoviedb.org/reference/movie-details`
+    //   fetch(url, {
+    //     method: 'GET',
+    //     headers: {
+    //       accept: 'application/json',
+    //       Authorization:
+    //         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmE5NGFiN2VkMWY0MTYzNWVmYTYwNWY3ZWM3NGEwYSIsIm5iZiI6MTc1Mzg5ODQzOC45MjEsInN1YiI6IjY4OGE1ZGM2ODYyYmNkMmJmYmExYTZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JkQMetRZX9F4quD8GBqSSWp2VLcNctcAL_VwQ_SUrSk',
+    //     },
+    //   })
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //       console.log(data);
+    //       setdataFilm(data);
+    //     })
+    //     .catch((err) => console.error('Ошибка загрузки:' + err))
+    //     .finally(() => setloading(false));

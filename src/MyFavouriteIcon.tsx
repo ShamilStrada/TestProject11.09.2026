@@ -11,14 +11,13 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const listRef = useRef<any>([]);
   const [flag, setFlag] = useState<boolean>(false);
   const [list, setList] = useState<any[]>([]);
-  // let newFlag = false;
   useEffect(() => {
     setTimeout(
       () =>
         FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
-          setList(films);
-          console.log(films);
-          listRef.current = films;
+          setList(films.results);
+          console.log(films.results);
+          listRef.current = films.results;
           console.log(listRef.current.some((a: any) => a.id === id));
           // newFlag=films.some((a):any=>a.id===id),
           // console.log(newFlag)
@@ -26,9 +25,6 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
         }),
       3000
     );
-    // useEffect(()=>{
-    //   console.log(list)
-    // },[list])
   }, [flag]);
   return (
     <IconButton>

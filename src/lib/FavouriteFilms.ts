@@ -3,17 +3,17 @@ import { useMemo } from "react";
 interface Fetch {
   idFilm?: number; //фильма
   url: string; //адрес для поиска
-  method: 'GET' | 'POST';
+  method?: 'GET' | 'POST';
   myId?: number;
 }
 // const Set1: Fetch = {
 //   id: 1,
 //   url: "",
 // };
-export async function FavouriteFilm({ url, method }: Fetch) {
+export async function FavouriteFilm({ url }: Fetch) {
     try {
       const res = await fetch(`https://api.themoviedb.org/3` + url, {
-        method: method,
+        method: "GET",
         headers: {
           accept: 'application/json',
           Authorization:
@@ -22,11 +22,14 @@ export async function FavouriteFilm({ url, method }: Fetch) {
       });
 
       if (!res.ok) {
+        const errordata= await res.json().catch(()=>null)
+        //"если не получилось распарсить тело ответа как JSON — просто считай, что там null, не крашься"
+        console.error(`Ошибка от сервера, ${errordata}`)
         throw new Error(`Ошибка сервера: ${res.status}`);
       }
       const data = await res.json();
-      console.log(data.results);
-      return data.results;
+      console.log(data);
+      return data;
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
       return []; //в случае если будет ошибка

@@ -20,5 +20,8 @@ export const mailMiddleware: Middleware<{}, RootState> = (store) => (next) => (a
 function Checkmiddleware(action: unknown): action is UnknownAction {
   //это type predicate прописывается значение,
   //которое будет возвращаться
+  //специальный синтаксис в TypeScript для функций, которые проверяют тип во время выполнения (type guard)
+  //"Если эта функция вернула true, то в этом месте кода можно считать, что action имеет тип UnknownAction."
+  //Это оператор in — проверяет наличие ключа в объекте (включая унаследованные через прототип).
   return typeof action === 'object' && action !== null && 'type' in action;
 }

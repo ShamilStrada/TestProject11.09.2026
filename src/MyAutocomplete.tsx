@@ -3,17 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import {  useEffect, useState } from "react";
 import { useImmer } from "use-immer";
-//Есть проблема с тем как сохранять себе полученные данные из fetch
-//Пробросить данные сразу в Card
-// const top100Films = [
-//   "Боевик",
-//   "Комедия",
-//   "Драма",
-//   "Триллер",
-//   "Ужасы",
-//   "Фантастика",
-//   "Детектив",
-// ];
+import { FavouriteFilm } from "./lib/FavouriteFilms";
 interface Genre {
   id:number;
   name:string;
@@ -24,34 +14,16 @@ interface filters {
 }
 export function MyAutocomplete({funChange}:filters) {
   const [renderInput, setrenderInput] = useState<Genre[]>([]);
-  const url = `https://api.themoviedb.org/3/genre/movie/list?language=ru`;
+  const url = `/genre/movie/list?language=ru`;
   const [dataFilters, setdataFilters] = useImmer<Genre[]>([]);
-  // const [dataFilters, setdataFilters] = useState<any[]>([])
-//   function HandleState(a:any){
-//   setdataFilters(a)
-// }
   useEffect(() => {
-    fetch(url, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmE5NGFiN2VkMWY0MTYzNWVmYTYwNWY3ZWM3NGEwYSIsIm5iZiI6MTc1Mzg5ODQzOC45MjEsInN1YiI6IjY4OGE1ZGM2ODYyYmNkMmJmYmExYTZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JkQMetRZX9F4quD8GBqSSWp2VLcNctcAL_VwQ_SUrSk",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    FavouriteFilm({url:url}).then((data)=>{
+       console.log(data);
         console.log(data.genres);
-        console.log(Array.isArray(data.genres));
-        
-        // setdataFilters(()=>data.genres);//рабочий вариант 
+        console.log(Array.isArray(data.genres)); 
         setdataFilters((draft)=>draft.concat(data.genres));
-        // HandleState(data.genres);
         console.log(dataFilters);
-      })
-      // .then((res)=>console.log(res.data))
-      .catch((error) => console.error(error));
+    })
   }, []);
   return (
     <>
@@ -59,7 +31,7 @@ export function MyAutocomplete({funChange}:filters) {
         <Typography sx={{fontSize: 16}}>Выбранные категории:</Typography>
       </div>
       <span></span>
-      <Autocomplete sx={{mt:1}}
+      <Autocomplete sx={{mt:2}}
         value={renderInput}
         onChange={(e, value) => {
           setrenderInput(value);
@@ -75,3 +47,39 @@ export function MyAutocomplete({funChange}:filters) {
     </>
   );
 }
+    // fetch(url, {
+    //   method: "GET",
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization:
+    //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmE5NGFiN2VkMWY0MTYzNWVmYTYwNWY3ZWM3NGEwYSIsIm5iZiI6MTc1Mzg5ODQzOC45MjEsInN1YiI6IjY4OGE1ZGM2ODYyYmNkMmJmYmExYTZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JkQMetRZX9F4quD8GBqSSWp2VLcNctcAL_VwQ_SUrSk",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     console.log(data.genres);
+    //     console.log(Array.isArray(data.genres));
+        
+    //     // setdataFilters(()=>data.genres);//рабочий вариант 
+    //     setdataFilters((draft)=>draft.concat(data.genres));
+    //     // HandleState(data.genres);
+    //     console.log(dataFilters);
+    //   })
+    //   // .then((res)=>console.log(res.data))
+    //   .catch((error) => console.error(error));
+      // const [dataFilters, setdataFilters] = useState<any[]>([])
+//   function HandleState(a:any){
+//   setdataFilters(a)
+// }
+//Есть проблема с тем как сохранять себе полученные данные из fetch
+//Пробросить данные сразу в Card
+// const top100Films = [
+//   "Боевик",
+//   "Комедия",
+//   "Драма",
+//   "Триллер",
+//   "Ужасы",
+//   "Фантастика",
+//   "Детектив",
+// ];
