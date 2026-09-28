@@ -9,8 +9,7 @@ interface Fetch {
 //   id: 1,
 //   url: "",
 // };
-export function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete }: Fetch) {
-  const fetchFilm = async () => {
+export async function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete }: Fetch) {
     try {
       const res = await fetch(`https://api.themoviedb.org/3` + url, {
         method: 'POST',
@@ -32,8 +31,9 @@ export function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete }: Fet
         throw new Error(`Ошибка сервера: ${res.status}`);
       }
       const data = await res.json();
-      // setList(data)
       console.log(data.success);
+      return data;
+      // setList(data)
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
     } finally {
@@ -41,5 +41,3 @@ export function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete }: Fet
     }
   };
 
-  fetchFilm();
-}

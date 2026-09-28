@@ -13,14 +13,13 @@ export function MyFilter({ state, handleState, page }: MyFilterprops) {
   const [url, seturl] = useState(url2);
   const newUrl = url + `&page=${page}`; ///вставка переменной в строку ${page}
   useEffect(() => {
-    (FavouriteFilm({ url: newUrl }).then((data) => {
+    FavouriteFilm({ url: newUrl }).then((data) => {
       handleState(data.results);
       console.log(data.results);
       console.log(state);
       console.log(parseInt(state[0].release_date));
-    }),
-      [newUrl]);
-  });
+    });
+  }, [newUrl]);
   return (
     <>
       <Select
