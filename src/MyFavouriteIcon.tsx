@@ -7,19 +7,22 @@ import { AddDeleteFavouriteFilm } from './lib/PostFilm';
 interface PropsMyFavourite {
   id: number;
 }
-function likeFilm(massiveLike: [], id: number, flag: boolean, likeSuccess: boolean) {
-  if (!flag) {
-    return massiveLike.some((a: any) => a.id === id) ? 'red' : 'none';
-  } else {
-    if (likeSuccess) {
-      alert('Добавлено в избранное');
-      return 'red';
-    } else {
-      alert('Не удалось добавить ');
-      return 'none';
+async function likeFilm(massiveLike: [], id: number, flag: boolean, likeSuccess: boolean) {
+  const [favourites,setFavourites] =useState([])
+  const liked = massiveLike.some((a: any) => a.id === id)
+  const prev = massiveLike
+  setFavourites(liked?)
+  try {
+    
+    // const newprev = await likeSuccess;
+    if (!likeSuccess) {
+      alert('Не удалось добавить')
+      // throw new Error(`Не вышло, ${newprev.message}`);
     }
-  }
-}
+  // } catch {
+  //   alert('Не получилось');
+  // }
+}}
 export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const listRef = useRef<any>([]);
   const flagRef = useRef<boolean>(false);
@@ -27,20 +30,21 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const [flagLike, setFlagLike] = useState<boolean>(false);
   const [list, setList] = useState<any[]>([]);
   useEffect(() => {
-    setTimeout(()=>{
-  (FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
-      setList(films.results);
-      console.log(films.results);
-      listRef.current = films.results;
-      console.log(listRef.current.some((a: any) => a.id === id));
-    }))},2000);
+    setTimeout(() => {
+      FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
+        setList(films.results);
+        console.log(films.results);
+        listRef.current = films.results;
+        console.log(listRef.current.some((a: any) => a.id === id));
+      });
+    }, 10);
   }, [flag]);
   return (
-    <IconButton>
+    <IconButton disabled={!flagRef.current}>
       <FavoriteIcon
         onClick={() => {
           setFlag(!flag);
-          setFlagLike(true);
+          // setFlagLike(true);
           AddDeleteFavouriteFilm({
             url: `/account/${22187086}/favorite`,
             idFilm: id,
@@ -48,7 +52,7 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
             method: 'POST',
           }).then((data: any) => {
             console.log(data.success);
-            flagRef.current = data.success;
+            flagRef.current = data;
           });
         }}
         sx={{ color: likeFilm(listRef.current, id, flagLike, flagRef.current) }}
