@@ -36,6 +36,7 @@ export async function AddDeleteFavouriteFilm({ url, method, idFilm, AddOrDelete 
       // setList(data)
     } catch (err) {
       console.error(err instanceof Error ? err.message : 'Неизвестная ошибка');
+      alert('Не получилось добавить/удалить')
     } finally {
       console.log(idFilm, url, AddOrDelete, method);
     }

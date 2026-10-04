@@ -3,51 +3,74 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useState, useEffect, useRef } from 'react';
 import { FavouriteFilm } from './lib/FavouriteFilms';
 import { AddDeleteFavouriteFilm } from './lib/PostFilm';
+import { useImmer } from 'use-immer';
 interface PropsMyFavourite {
   id: number;
 }
-// function likeFilm(massiveLike: [], id: number, flag: boolean, likeSuccess: boolean, flagClick: boolean) {
-//   if (!flag) {
-//     return massiveLike.some((a: any) => a.id === id) ? 'red' : 'none';
-//   } else {
-//     if (!(massiveLike.some((a: any) => a.id === id))) {
-//     if (flagClick && !likeSuccess) {
-//       return 'red';
-//     } else if (likeSuccess) {
-//       return 'red';
-//     } else if (!likeSuccess) {
-//       alert('Не добавлено');
-//       return 'none';
-//     }
-//   } else {
-//     if (flagClick && !likeSuccess) {
-//       return 'none';
-//     } else if (likeSuccess) {
-//       return 'none';
-//     } else if (!likeSuccess) {
-//       alert('Не добавлено');
-//       return 'red';
-//   }
-//   }
-// }}
-async function likeFilm (){
-  
+async function likeFilm(massiveLike: [], id: number, flag: boolean, likeSuccess: boolean) {
+  // const [favourites,setFavourites] =useImmer([])
+  const liked = massiveLike.some((a: any) => a.id === id);
+  let color = '';
+  let oldcolor = '';
+  liked ? (color = 'none') : (color = 'red');
+  !liked ? (oldcolor = 'none') : (oldcolor = 'red');
+  // const prev = massiveLike
+  // setFavourites(draft=>{
+  //   liked? })
+  // setFavourites(liked)
+  // try {
+  const newprev = await likeSuccess;
+  if (!newprev) {
+    //ответ от сервера
+    alert('Не удалось добавить');
+    return oldcolor;
+    // setFavourites(prev)
+    // throw new Error(`Не вышло, ${newprev.message}`);
+  }
+  return color;
+  // } catch {
+  //   alert('Не получилось');
+  // }
 }
+type Color = 'red' | 'none';
+
 export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const listRef = useRef<any>([]);
   const flagRef = useRef<boolean>(false);
   const [flag, setFlag] = useState<boolean>(false);
-  const [flagLike, setFlagLike] = useState<boolean>(false);
-  const [list, setList] = useState<any[]>([]);
+  const flagLike = useRef<boolean>(false);
+  // const [list, setList] = useState<any[]>([]);
+  const color = useRef<Color>('none');
+
+  async function handleClik() {
+     color.current === 'red' ? color.current='none' : color.current='red';
+    await AddDeleteFavouriteFilm({
+      url: `/account/${22187086}/favorite`,
+      idFilm: id,
+      AddOrDelete: flagLike.current ? false : true,
+      method: 'POST',
+    }).then((data: any) => {
+      console.log(data.success);
+      flagRef.current = data.success;
+    });
+    if (!flagRef.current) {
+      color.current === 'red' ? color.current='none' : color.current='red';
+    }
+  }
+
   useEffect(() => {
     setTimeout(() => {
       FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
-        setList(films.results);
-        console.log(films.results);
+        // setList(films.results);
+        // console.log(films.results);
         listRef.current = films.results;
+        flagLike.current=(listRef.current.some((a: any) => a.id === id));
+        // setColor((listRef.current.some((a: any) => a.id === id)) ? 'red' : 'none');
+        flagLike.current?color.current='red':color.current='none'
+        console.log(color);
         console.log(listRef.current.some((a: any) => a.id === id));
       });
-    }, 2000);
+    }, 10);
   }, [flag]);
   return (
     <IconButton>
@@ -55,18 +78,19 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
         onClick={() => {
           console.log(flagRef.current);
           setFlag(!flag);
-          setFlagLike(true);
-          AddDeleteFavouriteFilm({
-            url: `/account/${22187086}/favorite`,
-            idFilm: id,
-            AddOrDelete: listRef.current.some((a: any) => a.id === id) ? false : true,
-            method: 'POST',
-          }).then((data: any) => {
-            console.log(data.success);
-            flagRef.current = data.success;
-          });
+          handleClik();
+          // setFlagLike(true);
+          // AddDeleteFavouriteFilm({
+          //   url: `/account/${22187086}/favorite`,
+          //   idFilm: id,
+          //   AddOrDelete: listRef.current.some((a: any) => a.id === id) ? false : true,
+          //   method: 'POST',
+          // }).then((data: any) => {
+          //   console.log(data.success);
+          //   flagRef.current = data;
+          // });
         }}
-        sx={{ color: (listRef.current.some((a: any) => a.id === id))? 'red' : 'none' }}
+        sx={{ color: color.current }}
       ></FavoriteIcon>
     </IconButton>
   );
