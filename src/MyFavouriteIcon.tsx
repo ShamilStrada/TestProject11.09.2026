@@ -32,6 +32,7 @@ async function likeFilm(massiveLike: [], id: number, flag: boolean, likeSuccess:
   //   alert('Не получилось');
   // }
 }
+
 type Color = 'red' | 'none';
 
 export function MyFavouriteIcon({ id }: PropsMyFavourite) {
@@ -40,10 +41,12 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
   const [flag, setFlag] = useState<boolean>(false);
   const flagLike = useRef<boolean>(false);
   // const [list, setList] = useState<any[]>([]);
-  const color = useRef<Color>('none');
+  const [color, setColor] = useState<Color>('none');
 
   async function handleClik() {
-     color.current === 'red' ? color.current='none' : color.current='red';
+    const nextLiked = !flagLike.current;
+    setColor(nextLiked ? 'red' : 'none');
+    flagLike.current = nextLiked;
     await AddDeleteFavouriteFilm({
       url: `/account/${22187086}/favorite`,
       idFilm: id,
@@ -53,8 +56,10 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
       console.log(data.success);
       flagRef.current = data.success;
     });
+    FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' });
     if (!flagRef.current) {
-      color.current === 'red' ? color.current='none' : color.current='red';
+      setColor(nextLiked ? 'none' : 'red');
+      flagLike.current = !nextLiked;
     }
   }
 
@@ -63,15 +68,16 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
       FavouriteFilm({ url: `/account/${22187086}/favorite/movies`, method: 'GET' }).then((films: any) => {
         // setList(films.results);
         // console.log(films.results);
-        listRef.current = films.results;
-        flagLike.current=(listRef.current.some((a: any) => a.id === id));
         // setColor((listRef.current.some((a: any) => a.id === id)) ? 'red' : 'none');
-        flagLike.current?color.current='red':color.current='none'
+        listRef.current = films.results;
+        flagLike.current = listRef.current.some((a: any) => a.id === id);
+
+        flagLike.current ? setColor('red') : setColor('none');
         console.log(color);
         console.log(listRef.current.some((a: any) => a.id === id));
       });
     }, 10);
-  }, [flag]);
+  }, []);
   return (
     <IconButton>
       <FavoriteIcon
@@ -90,7 +96,7 @@ export function MyFavouriteIcon({ id }: PropsMyFavourite) {
           //   flagRef.current = data;
           // });
         }}
-        sx={{ color: color.current }}
+        sx={{ color: color }}
       ></FavoriteIcon>
     </IconButton>
   );
