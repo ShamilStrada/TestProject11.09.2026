@@ -18,7 +18,7 @@ export async function FavouriteFilm({ url }: Fetch) {
           accept: 'application/json',
           Authorization:
             'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNmE5NGFiN2VkMWY0MTYzNWVmYTYwNWY3ZWM3NGEwYSIsIm5iZiI6MTc1Mzg5ODQzOC45MjEsInN1YiI6IjY4OGE1ZGM2ODYyYmNkMmJmYmExYTZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JkQMetRZX9F4quD8GBqSSWp2VLcNctcAL_VwQ_SUrSk',
-        },
+        },//ключ где то надо хранить, лучше в локал стораже, либо на бэкэнде
       });
 
       if (!res.ok) {

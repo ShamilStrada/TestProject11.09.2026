@@ -17,7 +17,6 @@ export const InitialProps: UserProp = {
 };
 
 const CheckMail = createSlice({
-  
   name: 'user',
   initialState: InitialProps,
   reducers: {

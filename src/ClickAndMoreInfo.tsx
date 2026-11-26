@@ -20,7 +20,7 @@ export function AppClick() {
       console.log(data);
       setdataFilm(data);
     })
-    .finally(()=>setloading(false));
+    .finally(()=>setloading(false));//этот ключевой loading не позволяет дальше падать в ошибку
   }, [url]);
   if (loading) return <div>"Загрузка..."</div>;
   return (
