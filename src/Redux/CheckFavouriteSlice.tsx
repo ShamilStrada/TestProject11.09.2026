@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-
-
+//1 есть общий стор с данными об лайкнутых избранных 
+//2 перед каждым обновлением, мы выгружаем с локал стора все эти данные
+//3 когда лайкаем сначала запрос на сервер-->мгновенное изменение на лайк-->запрос с сервера(подписка на обновления)-->
+//4 -->если изменилось то пушим в стор-->сверяем значение со стором 
+//
 export const fetchFavourite=createAsyncThunk('favourite/fetchall',async()=>{
     const res = await fetch('https://api.themoviedb.org/3/account/${22187086}/favorite/movies')
     return res.json()
@@ -45,8 +48,11 @@ const Favourite = createSlice({
     },
     extraReducers:(builder)=>{
         builder
-        .addCase(fetchFavourite.fulfilled, (state,action)=>{
+        .addCase(fetchFavourite.fulfilled, (state,action:PayloadAction)=>{
             state.favouriteItems=action.payload;
         })
+        .addCase(createPost.fulfilled,(state,action:PayloadAction)=>{
+            state.favouriteItems.push(action.payload)
+        })
     }
-}
+})
